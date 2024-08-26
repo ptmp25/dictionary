@@ -13,6 +13,7 @@
             </div>
 
             <button type="submit">Login</button>
+            <p>If you don't have account</p> <router-link to="/register">Register</router-link>
         </form>
 
         <div v-if="errorMessage" class="error">
@@ -48,11 +49,7 @@ export default {
                 const res = await BackendApi.loginUser(user);
                 console.log("User logged in, token received:", res.data.token);
                 // Store token and redirect as needed
-                if (res && res.data && res.data.token) {
-                    localStorage.setItem("token", res.data.token);
-                } else {
-                    console.error('Response or token is undefined');
-                }
+                localStorage.setItem("token", res.data.token);
                 this.$router.push("/");
                 // this.$router.push('/dashboard'); // Example redirect after login
             } catch (error) {
