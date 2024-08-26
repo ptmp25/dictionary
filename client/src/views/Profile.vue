@@ -4,19 +4,20 @@
         <form @submit.prevent="updateUser">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" v-model="user.name" id="name" required />
+                <input readonly type="text" v-model="user.name" id="name" required />
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" v-model="user.email" id="email" required />
+                <input readonly type="email" v-model="user.email" id="email" required />
             </div>
 
             <div class="form-group">
                 <label for="point">Point</label>
-                <input type="text" v-model="user.point" id="point" required />
+                <input readonly type="text" v-model="user.point" id="point" required />
             </div>
-            <button type="submit">Update Profile</button>
+            <!-- <button type="submit">Update Profile</button> -->
+            <RouterLink to="/change-password" class="btn btn-primary">Change Password</RouterLink>
         </form>
 
         <div v-if="errorMessage" class="error">
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import { RouterLink } from "vue-router";
 import BackendApi from "../services/BackendApi"; // Adjust the path as necessary
 
 export default {
@@ -51,7 +53,8 @@ export default {
             try {
                 const res = await BackendApi.getUserProfile();
                 this.user = res.data;
-            } catch (error) {
+            }
+            catch (error) {
                 this.errorMessage = "Failed to load user data.";
                 console.error(error.response.data);
             }
@@ -60,12 +63,14 @@ export default {
             try {
                 const res = await BackendApi.updateUserProfile(this.user);
                 this.successMessage = "Profile updated successfully!";
-            } catch (error) {
+            }
+            catch (error) {
                 this.errorMessage = "Failed to update profile.";
                 console.error(error.response.data);
             }
         },
     },
+    components: { RouterLink }
 };
 </script>
 

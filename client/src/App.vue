@@ -15,7 +15,7 @@ import LogOut from './components/LogOut.vue'
   <header>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="/profile">Profile</RouterLink>
+    <RouterLink v-if="isAuthenticated" to="/profile">Profile</RouterLink>
     <LogOut v-if="isAuthenticated" ></LogOut>
     <RouterLink  v-if="!isAuthenticated" to="/login">Login</RouterLink>
   </header>

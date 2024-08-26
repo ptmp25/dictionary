@@ -32,4 +32,7 @@ export default {
   updateUserProfile(user) {
     return apiClient.patch("/auth", user); // PATCH request to update user profile
   },
+  changeUserPassword(passwordData) {
+    return apiClient.patch("/auth/change-password", passwordData);
+  },
 };

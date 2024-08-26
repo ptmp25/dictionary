@@ -127,4 +127,49 @@ router.patch(
   }
 );
 
+
+// @route       PATCH api/auth/change-password
+// @desc        Change user password
+// @access      Private
+router.patch(
+  "/change-password",
+  [
+    auth,
+    check("oldPassword", "Old password is required").exists(),
+    check("newPassword", "New password must be at least 6 characters long").isLength({ min: 6 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { oldPassword, newPassword } = req.body;
+
+    try {
+      const user = await User.findById(req.user.id);
+
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+
+      // Verify old password
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ msg: "Old password is incorrect" });
+      }
+
+      // Hash new password and update
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+      await user.save();
+
+      res.json({ msg: "Password updated successfully" });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
 module.exports = router;
