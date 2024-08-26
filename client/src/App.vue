@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import LogOut from './components/LogOut.vue'
 </script>
 
 <template>
@@ -14,10 +15,36 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
+    <LogOut v-if="isAuthenticated" ></LogOut>
   </header>
   
   <RouterView />
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isAuthenticated: false,
+    };
+  },
+  created() {
+    this.checkAuthStatus();
+  },
+  methods: {
+    checkAuthStatus() {
+      // Check if the token exists in localStorage
+      const token = localStorage.getItem("token");
+      this.isAuthenticated = !!token;
+    },
+  },
+  watch: {
+    '$route'() {
+      this.checkAuthStatus();
+    }
+  }
+};
+</script>
 
 <style scoped>
 header {

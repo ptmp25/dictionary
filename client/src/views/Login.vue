@@ -22,7 +22,9 @@
 </template>
 
 <script>
-import BackendApi from "@/services/BackendApi"; // Adjust the path as necessary
+import BackendApi from "../services/BackendApi"; 
+import { useRoute } from 'vue-router';
+// import localStorage from 'localStorage';
 
 export default {
     data() {
@@ -31,6 +33,10 @@ export default {
             password: "",
             errorMessage: null,
         };
+    },
+    setup() {
+        const router = useRoute();
+        return { router };
     },
     methods: {
         async loginUser() {
@@ -42,11 +48,16 @@ export default {
                 const res = await BackendApi.loginUser(user);
                 console.log("User logged in, token received:", res.data.token);
                 // Store token and redirect as needed
-                localStorage.setItem("token", res.data.token);
+                if (res && res.data && res.data.token) {
+                    localStorage.setItem("token", res.data.token);
+                } else {
+                    console.error('Response or token is undefined');
+                }
+                this.$router.push("/");
                 // this.$router.push('/dashboard'); // Example redirect after login
             } catch (error) {
-                this.errorMessage = error.response.data.msg || "Login failed.";
-                console.error(error.response.data);
+                this.errorMessage = error || "Login failed.";
+                console.error(error);
             }
         },
     },

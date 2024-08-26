@@ -58,6 +58,7 @@ export default {
                     password: this.password,
                 };
                 const res = await BackendApi.registerUser(user);
+                alert("User registered");
                 console.log("User registered:", res.data);
                 // Optionally, redirect to login or another page
                 // this.$router.push('/login');
