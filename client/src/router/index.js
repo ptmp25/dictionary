@@ -16,24 +16,17 @@ export const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
-      path: "/new",
-      name: "new",
-      component: () => import("../views/AddNew.vue"),
-    },
-    {
       path: "/edit/:id",
       name: "edit",
       component: () => import("../views/Edit.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/details/:id",
       name: "details",
       component: () => import("../views/Details.vue"),
-    },
-    {
-      path: "/translate",
-      name: "translate",
-      component: () => import("../views/Translate.vue"),
     },
     {
       path: "/register",

@@ -1,5 +1,5 @@
 <template>
-  <Add @fetchList="fetchList" />
+  <Add v-if="isLogIn()" @fetchList="fetchList" />
   <Search @fetchList="fetchList" :languageList="languageList" :words="words" @updateWords="updateWords"
     @updateLanguageList="updateLanguageList" />
   <div class="card bg-base-100 w-10/12 my-2.5 shadow-xl mx-auto">
@@ -51,11 +51,11 @@
               <td>
                 <button v-if="editMode !== word.id" class="btn btn-xs btn-info mx-2"
                   @click="showDetails(word.id)">Details</button>
-                <button v-if="editMode !== word.id" class="btn btn-xs btn-warning mx-2"
+                <button v-if="isLogIn() && editMode !== word.id" class="btn btn-xs btn-warning mx-2"
                   @click="editWord(word.id)">Edit</button>
                 <button v-if="editMode === word.id" class="btn btn-xs btn-info mx-2"
                   @click="saveWord(word.id)">Save</button>
-                <button v-if="editMode !== word.id" class="btn btn-xs btn-error mx-2"
+                <button v-if="isLogIn() && editMode !== word.id" class="btn btn-xs btn-error mx-2"
                   @click="deleteWord(word.id)">Delete</button>
                 <button v-if="editMode === word.id" class="btn btn-xs btn-error mx-2" @click="cancelEdit">Cancel</button>
               </td>
@@ -134,6 +134,9 @@ export default {
     },
   },
   methods: {
+    isLogIn(){
+      return !!localStorage.getItem('token');
+    },
     async fetchList() {
 
       // If currentPage is greater than totalPages, reset it to totalPages
