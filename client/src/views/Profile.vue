@@ -27,8 +27,8 @@
                 <button @click="cancelDelete">Cancel</button>
             </div>
 
-            <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-            <div v-if="successMessage" class="success">{{ successMessage }}</div>
+            <!-- <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+            <div v-if="successMessage" class="success">{{ successMessage }}</div> -->
         </form>
 
         <div v-if="errorMessage" class="error">
@@ -42,7 +42,9 @@
 
 <script>
 import { RouterLink } from "vue-router";
-import BackendApi from "../services/BackendApi"; // Adjust the path as necessary
+import BackendApi from "../services/backendApi"; // Adjust the path as necessary
+import { useToast } from "vue-toastification";
+import { useRoute } from "vue-router";
 
 export default {
     data() {
@@ -54,7 +56,13 @@ export default {
             },
             errorMessage: null,
             successMessage: null,
+            showConfirmation: false,
         };
+    },
+    setup() {
+        const toast = useToast();
+        const route = useRoute();
+        return { toast, route };
     },
     created() {
         this.getUserProfile();
@@ -70,13 +78,21 @@ export default {
                 console.error(error.response.data);
             }
         },
-        async updateUser() {
+        confirmDeleteAccount() {
+            this.showConfirmation = true;
+        },
+        cancelDelete() {
+            this.showConfirmation = false;
+        },
+        async deleteAccount() {
             try {
-                const res = await BackendApi.updateUserProfile(this.user);
-                this.successMessage = "Profile updated successfully!";
-            }
-            catch (error) {
-                this.errorMessage = "Failed to update profile.";
+                await BackendApi.deleteUserAccount();
+                this.successMessage = "Account deleted successfully.";
+                localStorage.removeItem("token"); // Clear token from localStorage
+                this.toast.success("Account deleted successfully.");
+                this.$router.push("/"); // Redirect to home page or login page
+            } catch (error) {
+                this.errorMessage = error.response.data.msg || "Failed to delete account.";
                 console.error(error.response.data);
             }
         },

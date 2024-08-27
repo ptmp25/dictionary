@@ -10,6 +10,24 @@ const apiClient = axios.create({
   },
 });
 
+const apiUserClient = axios.create({
+  baseURL: "http://localhost:5000/api",
+  withCredentials: false,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+});
+
+// Add authorization header for protected routes
+apiUserClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export default {
   createNew(wordData) {
     return apiClient.post("/words/save", wordData);
@@ -121,18 +139,22 @@ export default {
     return response.data;
   },
   registerUser(user) {
-    return apiClient.post("/users", user);
+    return apiUserClient.post("/users", user);
   },
   loginUser(user) {
-    return apiClient.post("/auth", user);
+    return apiUserClient.post("/auth", user);
   },
   getUserProfile() {
-    return apiClient.get("/auth"); // GET request to fetch logged-in user data
+    return apiUserClient.get("/auth"); // GET request to fetch logged-in user data
   },
   updateUserProfile(user) {
-    return apiClient.patch("/auth", user); // PATCH request to update user profile
+    return apiUserClient.patch("/auth", user); // PATCH request to update user profile
   },
   changeUserPassword(passwordData) {
-    return apiClient.patch("/auth/change-password", passwordData);
+    return apiUserClient.patch("/auth/change-password", passwordData);
   },
+  deleteUserAccount() {
+    return apiUserClient.delete("/auth/delete-account");
+  }
 };
+

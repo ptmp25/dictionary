@@ -1,3 +1,6 @@
+<script setup>
+import LogOut from "./LogOut.vue"; // Adjust the path as necessary
+</script>
 <template>
     <nav class="bg-gray-700">
         <div class="container mx-auto py-4 flex justify-center items-center">
@@ -17,7 +20,7 @@
                     </svg>
                     <router-link to="/" class="text-gray-50">Home</router-link>
                 </div>
-                <div class="flex items-center space-x-2">
+                <!-- <div class="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="none" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -25,10 +28,17 @@
                     </svg>
 
                     <router-link :to="`/about/${username}`" class="text-gray-50">About</router-link>
+                </div> -->
+                <div v-if="!isAuthenticated" >
+                    <router-link to="/login" class="text-gray-50">Login</router-link>
                 </div>
-                <!-- <div class="flex items-center space-x-2">
-                            <router-link class="text-gray-50">Certificate Training</router-link>
-                        </div> -->
+                <div v-else  class="flex items-center space-x-2">
+                    <router-link to="/profile" class="text-gray-50">Profile</router-link>
+                    <LogOut class="text-gray-50"></LogOut>
+                </div>
+                <!-- <div>
+                    <LogOut v-if="!checkAuthStatus"  class="text-gray-50">Register</LogOut>
+                </div> -->
             </div>
         </div>
     </nav>
@@ -36,11 +46,28 @@
 
 <script>
 export default {
-    name: "Navbar",
     data() {
         return {
-            username: 'Phan Thi Mai Phuong'  // You can dynamically fetch this or use Vuex to manage state
+            username: "a",
+            isAuthenticated: false,
+        };
+    },
+    created() {
+        // this.checkAuthStatus();
+        console.log(this.checkAuthStatus());
+    },
+    methods: {
+        checkAuthStatus() {
+            // Check if the token exists in localStorage
+            const token = localStorage.getItem("token");
+            this.isAuthenticated = token;
+            return this.isAuthenticated;
+        },
+    },
+    watch: {
+        '$route'() {
+            this.checkAuthStatus();
         }
     }
-}
+};
 </script>

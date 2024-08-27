@@ -1,40 +1,43 @@
 <template>
-    <div class="register">
-        <h2>Register</h2>
-        <form @submit.prevent="registerUser">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" v-model="name" id="name" required autocomplete="off" />
+    <div class="card bg-base-100 w-10/12 my-2.5  mx-auto shadow-xl">
+        <div class="card-body">
+
+            <div class="card-title">Register</div>
+            <form @submit.prevent="registerUser">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="input input-bordered" v-model="name" id="name" required autocomplete="off" />
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="input input-bordered" v-model="email" id="email" required autocomplete="off" />
+                </div>
+    
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="input input-bordered" v-model="password" id="password" required autocomplete="off" />
+                </div>
+    
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" class="input input-bordered" v-model="confirmPassword"  id="confirmPassword" required autocomplete="off" />
+                </div>
+    
+                <button class="btn btn-success btn-outline btn-xs mt-2" type="submit">Register</button>
+            </form>
+    
+            <div v-if="errorMessage" class="error">
+                {{ errorMessage }}
             </div>
-
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" v-model="email" id="email" required autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" v-model="password" id="password" required autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" v-model="confirmPassword"  id="confirmPassword" required autocomplete="off" />
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
-
-        <div v-if="errorMessage" class="error">
-            {{ errorMessage }}
         </div>
     </div>
 </template>
 
 <script>
-import BackendApi from "../services/BackendApi"; // Adjust the path as necessary
+import BackendApi from "../services/backendApi"; // Adjust the path as necessary
 import { useRoute } from 'vue-router';
-import { useToast } from 'vue-toast-notification';
+import { useToast } from 'vue-toastification';
 
 export default {
     data() {
@@ -48,8 +51,8 @@ export default {
     },
     setup() {
         const router = useRoute();
-        const $toast = useToast();
-        return { router, $toast };
+        const toast = useToast();
+        return { router, toast };
     },
     methods: {
         async registerUser() {
@@ -67,7 +70,7 @@ export default {
                 const res = await BackendApi.registerUser(user);
                 // alert("User registered");
                 console.log("User registered:", res.data);
-                this.$toast.success('Registration successful');
+                this.toast.success('Registration successful');
                 // Optionally, redirect to login or another page
                 this.$router.push('/login');
             } catch (error) {

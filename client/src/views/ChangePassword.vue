@@ -4,20 +4,20 @@
         <form @submit.prevent="changePassword">
             <div class="form-group">
                 <label for="oldPassword">Old Password:</label>
-                <input type="password" v-model="oldPassword" id="oldPassword" required />
+                <input class="input input-bordered"  type="password" v-model="oldPassword" id="oldPassword" required />
             </div>
 
             <div class="form-group">
                 <label for="newPassword">New Password:</label>
-                <input type="password" v-model="newPassword" id="newPassword" required />
+                <input class="input input-bordered" type="password" v-model="newPassword" id="newPassword" required />
             </div>
 
             <div class="form-group">
                 <label for="confirmPassword">Confirm New Password:</label>
-                <input type="password" v-model="confirmPassword" id="confirmPassword" required />
+                <input class="input input-bordered" type="password" v-model="confirmPassword" id="confirmPassword" required />
             </div>
 
-            <button type="submit">Change Password</button>
+            <button  class="btn btn-warning btn-xs mt-2" type="submit">Change Password</button>
         </form>
 
         <div v-if="errorMessage" class="error">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import BackendApi from "@/services/BackendApi"; // Adjust the path as necessary
+import BackendApi from "../services/backendApi"; // Adjust the path as necessary
 
 export default {
     data() {
