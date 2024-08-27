@@ -79,9 +79,9 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import backendApi from '../services/backendApi'; // Ensure this path is correct
+// import { ref } from 'vue';
+// import { useRouter } from 'vue-router';
+import BackendApi from '../services/BackendApi'; // Ensure this path is correct
 import { useToast } from 'vue-toastification'
 import languages from '../hooks/languages';
 
@@ -106,7 +106,7 @@ export default {
     methods: {
         async create() {
             try {
-                const response = await backendApi.saveWord(this.word);
+                const response = await BackendApi.saveWord(this.word);
                 const data = response.data;
                 if (response.result !== "OK" || response.status !== 200) {
                     if (data.code && data.code === 11000) {
@@ -152,7 +152,7 @@ export default {
             formData.append('file', this.csvFile);
 
             try {
-                const response = await backendApi.uploadCSV(formData);
+                const response = await BackendApi.uploadCSV(formData);
                 this.toast.success("CSV uploaded successfully");
             } catch (error) {
                 this.toast.error(error.response?.data?.message || 'An error occurred');
@@ -163,7 +163,7 @@ export default {
                 if (sourceText !== "") {
                     console.log(sourceText, sourceLang);
                     if (this.word.en === "") {
-                        const response = await backendApi.translateText(
+                        const response = await BackendApi.translateText(
                             sourceText,
                             sourceLang,
                             "en",
@@ -171,7 +171,7 @@ export default {
                         this.word.en = response.translatedText;
                     }
                     if (this.word.de === "") {
-                        const response = await backendApi.translateText(
+                        const response = await BackendApi.translateText(
                             sourceText,
                             sourceLang,
                             "de",
@@ -179,7 +179,7 @@ export default {
                         this.word.de = response.translatedText;
                     }
                     if (this.word.fr === "") {
-                        const response = await backendApi.translateText(
+                        const response = await BackendApi.translateText(
                             sourceText,
                             sourceLang,
                             "fr",
@@ -187,7 +187,7 @@ export default {
                         this.word.fr = response.translatedText;
                     }
                     if (this.word.vi === "") {
-                        const response = await backendApi.translateText(
+                        const response = await BackendApi.translateText(
                             sourceText, 
                             sourceLang,
                             "vi", 
@@ -196,7 +196,7 @@ export default {
                     }
                     for (const targetLang of Object.keys(this.word.others)) {
                         if (this.word.others[targetLang] === "" && targetLang !== sourceLang) {
-                            const response = await backendApi.translateText(
+                            const response = await BackendApi.translateText(
                                 sourceText,
                                 sourceLang, 
                                 targetLang,
@@ -208,7 +208,7 @@ export default {
                 } else {
                     for (const targetLang of Object.keys(this.word.others)) {
                         if (this.word.others[targetLang] === "" && targetLang !== sourceLang) {
-                            const response = await backendApi.translateText(
+                            const response = await BackendApi.translateText(
                                 sourceText,
                                 targetLang
                             );

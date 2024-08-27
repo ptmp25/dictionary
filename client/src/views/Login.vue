@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import BackendApi from "../services/backendApi";
+import BackendApi from "../services/BackendApi";
 import { useRoute } from 'vue-router'; 
 import { useToast } from 'vue-toastification';
 

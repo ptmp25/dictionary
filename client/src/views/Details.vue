@@ -43,7 +43,7 @@
 <script>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import backendApi from '../services/backendApi'; // Ensure this path is correct
+import BackendApi from '../services/BackendApi'; // Ensure this path is correct
 import { router } from '../router'; // Import the router object from the Vue Router package
 import useDetails from '../hooks/useDetails';
 import languages from '../hooks/languages';
@@ -85,7 +85,7 @@ export default {
                 return;
             }
             if (this.word) {
-                const response = await backendApi.deleteWord(this.word.id);
+                const response = await BackendApi.deleteWord(this.word.id);
                 if (response) {
                     router.push('/');
                     router.reload();

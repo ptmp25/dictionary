@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import BackendApi from "../services/backendApi"; // Adjust the path as necessary
+import BackendApi from "../services/BackendApi"; // Adjust the path as necessary
 
 export default {
     data() {

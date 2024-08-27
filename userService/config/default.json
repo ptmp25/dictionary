@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost:27017/words",
+  "mongoURI": "mongodb://10.10.10.19:27017/dictionary",
   "jwtSecret": "Secret"
 }

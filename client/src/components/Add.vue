@@ -65,7 +65,7 @@
 
 <script>
 import languages from '../hooks/languages';
-import backendApi from '../services/backendApi';
+import BackendApi from '../services/BackendApi';
 import { useToast } from 'vue-toastification';
 import useTranslate from '../hooks/useTranslate';
 
@@ -134,7 +134,7 @@ export default {
                 return;
             }
             try {
-                const response = await backendApi.saveWord(this.word);
+                const response = await BackendApi.saveWord(this.word);
                 if (response.result !== "OK" || response.status !== 200) {
                     if (response.code && response.code === 11000) {
                         this.toast.error(response.message);
@@ -186,7 +186,7 @@ export default {
             formData.append('file', this.csvFile);
 
             try {
-                const response = await backendApi.uploadCSV(formData);
+                const response = await BackendApi.uploadCSV(formData);
                 this.$emit('fetchList');
                 this.toast.success("CSV uploaded successfully");
             } catch (error) {

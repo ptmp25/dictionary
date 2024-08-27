@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import backendApi from '../services/backendApi';
+import BackendApi from '../services/BackendApi';
 import { useToast } from "vue-toastification";
 
 export default function useTranslate() {
@@ -21,7 +21,7 @@ export default function useTranslate() {
                     for (const targetLang of Object.keys(word.value.translations)) {
                         for (const index in word.value.translations[targetLang]) {
                             if (word.value.translations[targetLang][index] === "" && targetLang !== sourceLang) {
-                                const response = await backendApi.translateText(
+                                const response = await BackendApi.translateText(
                                     sourceText,
                                     sourceLang,
                                     targetLang

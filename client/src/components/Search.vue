@@ -27,7 +27,7 @@
 <script>
 import { ref, onMounted, watch } from 'vue';
 import { useToast } from 'vue-toastification';
-import BackendAPI from '../services/backendApi';
+import BackendAPI from '../services/BackendApi';
 import languages from '../hooks/languages';
 
 export default {

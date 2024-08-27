@@ -125,6 +125,7 @@ router.get("/read_list", async (req, res) => {
       totalPages: Math.ceil(total / limit),
       words,
     });
+    // console.log("Words:", words);
   } catch (err) {
     console.error("Error fetching word list:", err);
     res.status(500).json({ message: "Server Error", error: err.message });

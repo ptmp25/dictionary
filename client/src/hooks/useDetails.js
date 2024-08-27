@@ -1,6 +1,6 @@
 
 import { ref } from 'vue';
-import BackendAPI from "../services/backendApi";
+import BackendAPI from "../services/BackendApi";
 
 export default function useDetails() {
     const word = ref(null);

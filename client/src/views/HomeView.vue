@@ -78,7 +78,7 @@
 
 <script>
 import { ref, onMounted, computed } from "vue";
-import BackendAPI from '../services/backendApi';
+import BackendApi from '../services/BackendApi';
 import { router } from '../router';
 import { useToast } from 'vue-toastification';
 import { useRoute, useRouter } from 'vue-router';
@@ -86,7 +86,6 @@ import languages from "../hooks/languages";
 import Add from '../components/Add.vue';
 import Search from '../components/Search.vue';
 import useTranslate from "../hooks/useTranslate";
-import backendApi from "../services/backendApi";
 
 export default {
   data() {
@@ -144,7 +143,7 @@ export default {
         this.currentPage = this.totalPages;
       }
       try {
-        const response = await BackendAPI.readList(
+        const response = await BackendApi.readList(
           this.currentPage,
           this.wordsPerPage,
           this.sortField,
@@ -189,7 +188,7 @@ export default {
     },
     async sortList(sortField) {
       try {
-        const response = await BackendAPI.readList(
+        const response = await BackendApi.readList(
           this.currentPage,
           this.wordsPerPage,
           sortField,
@@ -252,7 +251,7 @@ export default {
           word.translations[code] = word.translations[code].filter(translation => translation !== '');
         }
         // Update word
-        const response = await BackendAPI.updateDetails(id, word);
+        const response = await BackendApi.updateDetails(id, word);
         if (response.statusText !== "OK" || response.status !== 200) {
           if (data.code && data.code === 11000) {
             Toast.error("Duplicate translation found, please check!");
@@ -272,7 +271,7 @@ export default {
       if (!confirm('Are you sure you want to delete this word?')) {
         return;
       }
-      BackendAPI.deleteWord(id)
+      BackendApi.deleteWord(id)
         .then(() => {
           this.fetchList();
         })
@@ -288,7 +287,7 @@ export default {
     },
     async downloadCSV() {
       try {
-        const response = await backendApi.downloadCSV(
+        const response = await BackendApi.downloadCSV(
           `/words/export_csv?languages=${this.languageList}`,
           {
             responseType: "blob",

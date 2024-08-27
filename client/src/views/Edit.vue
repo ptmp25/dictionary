@@ -65,7 +65,7 @@ import { router } from '../router'; // Import
 import useDetails from '../hooks/useDetails';
 import { useToast } from 'vue-toastification'
 import languages from '../hooks/languages';
-import backendApi from '../services/backendApi'; // Ensure this path is correct
+import BackendApi from '../services/BackendApi'; // Ensure this path is correct
 import useTranslate from '../hooks/useTranslate';
 
 export default {
@@ -122,7 +122,7 @@ export default {
                     return;
                 }
 
-                const response = await backendApi.updateDetails(this.id, this.word);
+                const response = await BackendApi.updateDetails(this.id, this.word);
                 const data = response.data;
                 console.log(response);
                 if (response.statusText !== "OK" || response.status !== 200) {
