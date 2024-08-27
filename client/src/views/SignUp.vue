@@ -33,6 +33,8 @@
 
 <script>
 import BackendApi from "../services/BackendApi"; // Adjust the path as necessary
+import { useRoute } from 'vue-router';
+import { useToast } from 'vue-toast-notification';
 
 export default {
     data() {
@@ -43,6 +45,11 @@ export default {
             confirmPassword: "",
             errorMessage: null,
         };
+    },
+    setup() {
+        const router = useRoute();
+        const $toast = useToast();
+        return { router, $toast };
     },
     methods: {
         async registerUser() {
@@ -58,10 +65,11 @@ export default {
                     password: this.password,
                 };
                 const res = await BackendApi.registerUser(user);
-                alert("User registered");
+                // alert("User registered");
                 console.log("User registered:", res.data);
+                this.$toast.success('Registration successful');
                 // Optionally, redirect to login or another page
-                // this.$router.push('/login');
+                this.$router.push('/login');
             } catch (error) {
                 this.errorMessage = error.response.data.msg || "Registration failed.";
                 console.error(error.response.data);

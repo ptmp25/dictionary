@@ -25,7 +25,7 @@
 <script>
 import BackendApi from "../services/BackendApi"; 
 import { useRoute } from 'vue-router';
-// import localStorage from 'localStorage';
+import {useToast} from 'vue-toast-notification';
 
 export default {
     data() {
@@ -36,8 +36,9 @@ export default {
         };
     },
     setup() {
+        const $toast = useToast();
         const router = useRoute();
-        return { router };
+        return { router, $toast };
     },
     methods: {
         async loginUser() {
@@ -50,6 +51,7 @@ export default {
                 console.log("User logged in, token received:", res.data.token);
                 // Store token and redirect as needed
                 localStorage.setItem("token", res.data.token);
+                this.$toast.success('Login successful');
                 this.$router.push("/");
                 // this.$router.push('/dashboard'); // Example redirect after login
             } catch (error) {

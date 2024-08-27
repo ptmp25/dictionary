@@ -18,6 +18,17 @@
             </div>
             <!-- <button type="submit">Update Profile</button> -->
             <RouterLink to="/change-password" class="btn btn-primary">Change Password</RouterLink>
+            <!-- Delete Account Button -->
+            <button @click="confirmDeleteAccount">Delete Account</button>
+            <!-- Confirmation Modal (optional) -->
+            <div v-if="showConfirmation" class="confirmation-modal">
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <button @click="deleteAccount">Yes, Delete</button>
+                <button @click="cancelDelete">Cancel</button>
+            </div>
+
+            <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+            <div v-if="successMessage" class="success">{{ successMessage }}</div>
         </form>
 
         <div v-if="errorMessage" class="error">
