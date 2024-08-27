@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  userservice:
+    build: ./userService
+    container_name: userservice
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    depends_on:
+      - mongo
+
+  dictionaryservice:
+    build: ./dictionaryService
+    container_name: dictionaryservice
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - DbKey=mongodb://mongo:27017/dictionaryservice
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./client
+    container_name: vue_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - userservice
+      - dictionaryservice
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
