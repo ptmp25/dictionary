@@ -20,15 +20,6 @@ import LogOut from "./LogOut.vue"; // Adjust the path as necessary
                     </svg>
                     <router-link to="/" class="text-gray-50">Home</router-link>
                 </div>
-                <!-- <div class="flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="none" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c-3.333 0-6 1.333-6 4v1h12v-1c0-2.667-2.667-4-6-4z" />
-                    </svg>
-
-                    <router-link :to="`/about/${username}`" class="text-gray-50">About</router-link>
-                </div> -->
                 <div v-if="!isAuthenticated" >
                     <router-link to="/login" class="text-gray-50">Login</router-link>
                 </div>
@@ -36,9 +27,6 @@ import LogOut from "./LogOut.vue"; // Adjust the path as necessary
                     <router-link to="/profile" class="text-gray-50">Profile</router-link>
                     <LogOut class="text-gray-50"></LogOut>
                 </div>
-                <!-- <div>
-                    <LogOut v-if="!checkAuthStatus"  class="text-gray-50">Register</LogOut>
-                </div> -->
             </div>
         </div>
     </nav>

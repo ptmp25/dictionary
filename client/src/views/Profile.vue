@@ -1,41 +1,42 @@
 <template>
-    <div class="profile">
-        <h2>User Profile</h2>
-        <form @submit.prevent="updateUser">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input readonly type="text" v-model="user.name" id="name" required />
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input readonly type="email" v-model="user.email" id="email" required />
-            </div>
-
-            <div class="form-group">
-                <label for="point">Point</label>
-                <input readonly type="text" v-model="user.point" id="point" required />
-            </div>
-            <!-- <button type="submit">Update Profile</button> -->
-            <RouterLink to="/change-password" class="btn btn-primary">Change Password</RouterLink>
-            <!-- Delete Account Button -->
-            <button @click="confirmDeleteAccount">Delete Account</button>
-            <!-- Confirmation Modal (optional) -->
-            <div v-if="showConfirmation" class="confirmation-modal">
-                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-                <button @click="deleteAccount">Yes, Delete</button>
-                <button @click="cancelDelete">Cancel</button>
-            </div>
-
-            <!-- <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-            <div v-if="successMessage" class="success">{{ successMessage }}</div> -->
+    <div class="profile card bg-base-100 w-10/12 my-2.5 mx-auto shadow-xl" >
+        <div class="card-body">
+            <h2 class="card-title">User Profile</h2>
+            <form @submit.prevent="updateUser">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input readonly type="text" v-model="user.name" id="name" required />
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input readonly type="email" v-model="user.email" id="email" required />
+                </div>
+    
+                <div class="form-group">
+                    <label for="point">Point: </label>
+                    <input readonly type="text" v-model="user.point" id="point" required />
+                </div>
+                <!-- <button type="submit">Update Profile</button> -->
+                <RouterLink to="/change-password" class="btn btn-primary btn-sm">Change Password</RouterLink>
+                <!-- Delete Account Button -->
+                <button @click="confirmDeleteAccount" class="btn btn-error btn-sm">Delete Account</button>
+                <!-- Confirmation Modal (optional) -->
+                <div class="card bg-base-100 w-10/12 my-2.5  mx-auto shadow-xl" >
+                    <div  v-if="showConfirmation" class="confirmation-modal card-body">
+                        <p class="card-title">Are you sure you want to delete your account? This action cannot be undone.</p>
+                        <button class="btn btn-error" @click="deleteAccount">Yes, Delete</button>
+                        <button class="btn btn-info" @click="cancelDelete">Cancel</button>
+                    </div>
+                </div>
         </form>
-
-        <div v-if="errorMessage" class="error">
-            {{ errorMessage }}
-        </div>
-        <div v-if="successMessage" class="success">
-            {{ successMessage }}
+    
+            <div v-if="errorMessage" class="error">
+                {{ errorMessage }}
+            </div>
+            <div v-if="successMessage" class="success">
+                {{ successMessage }}
+            </div>
         </div>
     </div>
 </template>
