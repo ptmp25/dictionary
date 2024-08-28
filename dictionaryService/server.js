@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const connectDB = require("./config/db");
 require("dotenv").config();
 // const { translate } = require("@vitalets/google-translate-api");
 
@@ -12,7 +13,7 @@ const wordsRouter = require("./routes/words");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const PORT = process.env.PORT || 3000;
-
+connectDB();
 const app = express();
 
 // Middleware
@@ -32,12 +33,6 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
-mongoose
-  .connect(process.env.DbKey, {})
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.log("MongoDB connection error:", error));
-
 app.use("/api/words", wordsRouter);
 
 const { translate } = require("bing-translate-api");
