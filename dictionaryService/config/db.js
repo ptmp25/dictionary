@@ -5,10 +5,10 @@ const db = process.env.MONGODB_URI || config.get("mongoURI");
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // // useCreateIndex: true,
+      // // useFindAndModify: false,
+      // useUnifiedTopology: true,
       // username: "admin",
       // password: "",
     });
