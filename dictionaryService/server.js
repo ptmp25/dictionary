@@ -13,8 +13,8 @@ const wordsRouter = require("./routes/words");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const PORT = process.env.PORT || 3000;
-connectDB();
 const app = express();
+connectDB();
 
 // Middleware
 app.use(cors());

@@ -4,29 +4,38 @@ services:
   user-service:
     build: ./userService
     container_name: userservice
+    image: wekmad/user-service:latest
     ports:
-      - "5000:5000"
+      - "3005:3005"
     environment:
-      - PORT=5000
+      - PORT=3005
       - NODE_ENV=production
       - DbKey=mongodb://10.10.10.19:27017/dictionary
 
   dictionary-service:
     build: ./dictionaryService
-    container_name: dictionaryservice
+    container_name: dictionary-service
+    image: wekmad/dictionary-service:latest
     ports:
-      - "3000:3000"
+      - "3006:3006"
     environment:
-      - PORT=3000
+      - PORT=3006
       - NODE_ENV=production
       - DbKey=mongodb://10.10.10.19:27017/dictionary
-      
 
-  frontend:
+  vue_frontend:
     build: ./client
     container_name: vue_frontend
+    image: wekmad/vue_frontend:latest
     ports:
-      - "8080:80"
+      - "3007:80"
+    environment:
+      - VUE_APP_DICTIONARY_SERVICE_URL=http://dictionaryservice:3006/api
+      - VUE_APP_USER_SERVICE_URL=http://userservice:3005/api
     depends_on:
       - user-service
       - dictionary-service
+
+networks:
+  app-network:
+    driver: bridge

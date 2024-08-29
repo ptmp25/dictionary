@@ -1,8 +1,10 @@
 // BackendApi.js
 import axios from "axios";
+const dictionaryServiceUrl = process.env.VUE_APP_DICTIONARY_SERVICE_URL;
+const userServiceUrl = process.env.VUE_APP_USER_SERVICE_URL;
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: dictionaryServiceUrl,
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -10,8 +12,9 @@ const apiClient = axios.create({
   },
 });
 
+
 const apiUserClient = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: userServiceUrl,
   withCredentials: false,
   headers: {
     Accept: "application/json",
