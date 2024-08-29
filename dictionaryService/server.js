@@ -3,10 +3,12 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 // const { translate } = require("@vitalets/google-translate-api");
+const connectDB = require("./config/db");
+connectDB();
 
 const wordsRouter = require("./routes/words");
 const bodyParser = require("body-parser");
@@ -32,12 +34,6 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
-mongoose
-  .connect(process.env.DbKey, {})
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.log("MongoDB connection error:", error));
-
 app.use("/api/words", wordsRouter);
 
 const { translate } = require("bing-translate-api");
@@ -49,7 +45,7 @@ app.post("/translateText", async (req, res) => {
   const toLang = req.body.toLang;
   console.log(text, fromLang, toLang);
   try {
-    const result = await translate(text, fromLang,  toLang);
+    const result = await translate(text, fromLang, toLang);
     res.json({ translatedText: result.translation });
   } catch (error) {
     res.status(500).json({ error: error.message });
