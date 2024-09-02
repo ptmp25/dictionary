@@ -1,6 +1,9 @@
 // BackendApi.js
 import axios from "axios";
 
+const dictionaryServiceUrl = import.meta.env.VITE_APP_DICTIONARY_SERVICE_URL;
+const userServiceUrl = import.meta.env.VITE_APP_USER_SERVICE_URL;
+
 const apiClient = axios.create({
   baseURL: "http://localhost:3000/api",
   withCredentials: false,
@@ -11,7 +14,7 @@ const apiClient = axios.create({
 });
 
 const apiUserClient = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: userServiceUrl,
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -21,7 +24,7 @@ const apiUserClient = axios.create({
 
 // Add authorization header for protected routes
 apiUserClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = window.localStorage.getItem("token"); // Replace localStorage with window.localStorage
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -40,6 +43,7 @@ export default {
     });
   },
   async readList(page, limit, sortField) {
+    console.log(dictionaryServiceUrl);
     try {
       const response = await apiClient.get(`/words/read_list/?page=${page}`, {
         params: { limit, sortField },
@@ -155,6 +159,5 @@ export default {
   },
   deleteUserAccount() {
     return apiUserClient.delete("/auth/delete-account");
-  }
+  },
 };
-

@@ -1,1 +1,0 @@
-docker run --name mongodb -p 27016:27017 -d mongodb/mongodb-community-server:latest
