@@ -1,11 +1,12 @@
 // BackendApi.js
 import axios from "axios";
 
-const dictionaryServiceUrl = import.meta.env.VITE_APP_DICTIONARY_SERVICE_URL;
+const dictionaryServiceUrl = import.meta.env.VITE_APP_DICTIONARY_SERVICE_URL 
+// || "http://localhost:3000/api";
 const userServiceUrl = import.meta.env.VITE_APP_USER_SERVICE_URL;
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: dictionaryServiceUrl,
   withCredentials: false,
   headers: {
     Accept: "application/json",

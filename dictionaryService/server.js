@@ -8,7 +8,6 @@ const cors = require("cors");
 require("dotenv").config();
 // const { translate } = require("@vitalets/google-translate-api");
 const connectDB = require("./config/db");
-connectDB();
 
 const wordsRouter = require("./routes/words");
 const bodyParser = require("body-parser");
@@ -27,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
+connectDB();
 // Rate limiter middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

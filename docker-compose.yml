@@ -23,18 +23,18 @@ services:
       - NODE_ENV=production      
       - DbKey=${DbKey}
 
-  # vue_frontend:
-  #   build: ./client
-  #   container_name: vue_frontend
-  #   image: wekmad/vue_frontend:latest
-  #   ports:
-  #     - "3007:80"
-  #   environment:
-  #     - VITE_APP_DICTIONARY_SERVICE_url=${VITE_APP_DICTIONARY_SERVICE_URL}
-  #     - VITE_APP_USER_SERVICE_url=${VITE_APP_USER_SERVICE_URL}
-  #   depends_on:
-  #     - user-service
-  #     - dictionary-service
+  vue_frontend:
+    build: ./client
+    container_name: vue_frontend
+    image: wekmad/vue_frontend:latest
+    ports:
+      - "3007:80"
+    environment:
+      - VITE_APP_DICTIONARY_SERVICE_url=${VITE_APP_DICTIONARY_SERVICE_URL}
+      - VITE_APP_USER_SERVICE_url=${VITE_APP_USER_SERVICE_URL}
+    depends_on:
+      - user-service
+      - dictionary-service
 
 networks:
   app-network:
